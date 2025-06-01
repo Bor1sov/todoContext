@@ -1,17 +1,18 @@
-import { useTasks } from '../context/TaskContext';
+import { useDispatch } from 'react-redux';
+import { setSearchTerm } from '../store/uiSlice';
 import { useState, useEffect } from 'react';
 
 function SearchBar() {
-  const { searchTerm, setSearchTerm } = useTasks();
-  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+  const dispatch = useDispatch();
+  const [localSearchTerm, setLocalSearchTerm] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setSearchTerm(localSearchTerm);
+      dispatch(setSearchTerm(localSearchTerm));
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [localSearchTerm, setSearchTerm]);
+  }, [localSearchTerm, dispatch]);
 
   return (
     <div className="search-bar">

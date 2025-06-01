@@ -1,12 +1,14 @@
-import { useTasks } from '../context/TaskContext';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTask } from '../store/tasksSlice';
 
 function AddTask({ newTask, setNewTask }) {
-  const { addTask } = useTasks();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newTask.trim()) {
-      addTask(newTask);
+      dispatch(addTask(newTask));
       setNewTask('');
     }
   };

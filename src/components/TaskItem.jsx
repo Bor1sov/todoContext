@@ -1,15 +1,25 @@
-import { useTasks } from '../context/TaskContext';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateTask, deleteTask } from '../store/tasksSlice';
 
 function TaskItem({ task }) {
-  const { toggleComplete, updateTask, deleteTask } = useTasks();
+  const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(task.title);
 
+  const handleToggleComplete = () => {
+    dispatch(updateTask({ id: task.id, updates: { completed: !task.completed } }));
+  };
+
   const handleSave = () => {
     if (editText.trim()) {
-      updateTask(task.id, { title: editText });
+      dispatch(updateTask({ id: task.id, updates: { title: editText } }));
       setIsEditing(false);
     }
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteTask(task.id));
   };
 
   return (
@@ -17,7 +27,7 @@ function TaskItem({ task }) {
       <input
         type="checkbox"
         checked={task.completed}
-        onChange={() => toggleComplete(task.id)}
+        onChange={handleToggleComplete}
       />
       {isEditing ? (
         <>
@@ -34,7 +44,7 @@ function TaskItem({ task }) {
           <span className="task-text">{task.title}</span>
           <div className="task-actions">
             <button onClick={() => setIsEditing(true)}>Изменить</button>
-            <button onClick={() => deleteTask(task.id)}>Удалить</button>
+            <button onClick={handleDelete}>Удалить</button>
           </div>
         </>
       )}

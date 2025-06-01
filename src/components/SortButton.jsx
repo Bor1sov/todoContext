@@ -1,12 +1,14 @@
-import { useTasks } from '../context/TaskContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleSort } from '../store/uiSlice';
 
 function SortButton() {
-  const { sortAlphabetically, setSortAlphabetically } = useTasks();
+  const dispatch = useDispatch();
+  const sortAlphabetically = useSelector((state) => state.ui.sortAlphabetically);
 
   return (
     <button
       className={`sort-btn ${sortAlphabetically ? 'active' : ''}`}
-      onClick={() => setSortAlphabetically(!sortAlphabetically)}
+      onClick={() => dispatch(toggleSort())}
     >
       {sortAlphabetically ? 'Отменить сортировку' : 'Сортировать по алфавиту'}
     </button>

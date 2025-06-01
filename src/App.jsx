@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Список дел</h1>
+      <h1>Список дел (Redux)</h1>
       <div className="controls">
         <AddTask newTask={newTask} setNewTask={setNewTask} />
         <SearchBar />
